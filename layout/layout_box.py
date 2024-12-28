@@ -9,6 +9,7 @@ class LayoutBox:
         self.border = self.parse_box_model("border")
         self.margin = self.parse_box_model("margin")
         self.position = styles.get("position", "static")
+        self.display = styles.get("display", "block")
         self.left = int(styles.get("left", "0").replace("px", ""))
         self.top = int(styles.get("top", "0").replace("px", ""))
 
@@ -41,6 +42,12 @@ class LayoutBox:
         elif self.position == "relative":
             self.left += self.margin["left"]
             self.top += self.margin["top"]
+        elif self.position == "fixed":
+            self.left = self.left
+            self.top = self.top
+        elif self.position == "sticky":
+            self.left = self.left
+            self.top = self.top
         else:  # static positioning
             self.left = self.margin["left"]
             self.top = self.margin["top"]
