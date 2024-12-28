@@ -15,7 +15,10 @@ def main():
     dom_tree = html_parser.parse()
 
     css_content = """
-        body { background: lightblue; }
+        body { background: lightblue; width: 1000px; height: 800px; }
+        .container { width: 500px; height: 300px; padding: 20px; border: 10px solid black; margin: 30px; position: relative; }
+        .absolute-box { width: 200px; height: 100px; background-color: yellow; position: absolute; left: 50px; top: 50px; }
+        .relative-box { width: 150px; height: 75px; background-color: green; position: relative; left: 20px; top: 20px; }
         p { color: green; font-size: 14px; }
     """  # Temporary inline CSS for testing
     css_parser = CSSParser()

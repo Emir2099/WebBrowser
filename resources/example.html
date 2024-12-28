@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test HTML</title>
     <style>
-        body { background-color: lightblue; }
+        body { background-color: lightblue; width: 1000px; height: 800px; }
+        .container { width: 500px; height: 300px; padding: 20px; border: 10px solid black; margin: 30px; position: relative; }
+        .absolute-box { width: 200px; height: 100px; background-color: yellow; position: absolute; left: 50px; top: 50px; }
+        .relative-box { width: 150px; height: 75px; background-color: green; position: relative; left: 20px; top: 20px; }
         p { color: green; font-size: 14px; }
     </style>
 </head>
 <body>
     <!-- This is a comment and should be removed -->
-    <div style="color: red; font-size: 20px;">
-        This is a div with inline styles.
+    <div class="container" style="color: red; font-size: 20px;">
+        This is a div with inline styles and box model properties.
+        <div class="absolute-box">This is an absolute positioned box.</div>
+        <div class="relative-box">This is a relative positioned box.</div>
         <span style="font-weight: bold;">This is a bold span.</span>
     </div>
     <p>This is a paragraph.</p>

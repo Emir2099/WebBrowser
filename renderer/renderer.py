@@ -19,7 +19,7 @@ class Renderer:
         font_weight = styles.get("font-weight", "normal")
 
         # Simulating rendering in the terminal
-        print(f"{indent}{content} (Color: {color}, Font-size: {font_size}, Background-color: {background_color}, Text-decoration: {text_decoration}, Font-weight: {font_weight})")
+        print(f"{indent}{content} (Color: {color}, Font-size: {font_size}, Background-color: {background_color}, Text-decoration: {text_decoration}, Font-weight: {font_weight}, Width: {box.width}px, Height: {box.height}px, Padding: {box.padding}, Border: {box.border}, Margin: {box.margin}, Position: {box.position}, Left: {box.left}px, Top: {box.top}px)")
 
         for child in box.children:
             self.draw_element(child, depth + 1)
