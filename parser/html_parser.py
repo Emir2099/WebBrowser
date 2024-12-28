@@ -31,15 +31,13 @@ class HTMLParser:
         self.html_content = html_content
 
     def parse(self):
-       
-    # Remove comments and scripts
+        # Remove comments and scripts
         html_content = self.remove_comments(self.html_content)
         html_content = self.remove_script_tags(html_content)
 
-    # Wrap the content in a root node if needed
+        # Wrap the content in a root node if needed
         root = html.fromstring(html_content)
         return self.build_tree(root)
-
 
     def remove_comments(self, html_content):
         """Remove HTML comments."""

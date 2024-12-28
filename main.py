@@ -7,7 +7,8 @@ import os
 
 def main():
     # Fetch HTML content
-    url = "http://127.0.0.1:5500/resources/example.html"  # Replace with any URL or file pathu
+    base_url = "http://127.0.0.1:5500/resources/"
+    url = os.path.join(base_url, "example.html")
     html_content = fetch_content(url)
 
     # Parse HTML and CSS
@@ -38,7 +39,7 @@ def main():
     layout_tree.calculate_layout()
 
     # Render the layout
-    renderer = Renderer(layout_tree)
+    renderer = Renderer(layout_tree, base_url)
     renderer.render()  # Render in the terminal
 
 if __name__ == "__main__":
