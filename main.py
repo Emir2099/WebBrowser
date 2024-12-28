@@ -5,10 +5,17 @@ from renderer.renderer import Renderer
 from utils.networking import fetch_content
 import os
 
+def handle_navigation(url):
+    html_content = fetch_content(url)
+    return html_content
+
+def handle_form_submission(form_data):
+    # Mock form submission
+    print("Form submitted with data:", form_data)
+
 def main():
     # Fetch HTML content
-    base_url = "http://127.0.0.1:5500/resources/"
-    url = os.path.join(base_url, "example.html")
+    url = "http://127.0.0.1:5500/resources/example.html"  # Replace with any URL or file path
     html_content = fetch_content(url)
 
     # Parse HTML and CSS
@@ -25,6 +32,10 @@ def main():
         p { color: green; font-size: 14px; }
         .float-left { float: left; width: 100px; height: 50px; background-color: lightgrey; }
         .float-right { float: right; width: 100px; height: 50px; background-color: lightcoral; }
+        .flex-container { display: flex; flex-direction: row; justify-content: space-between; align-items: center; }
+        .flex-item { flex: 1; padding: 10px; }
+        .grid-container { display: grid; grid-template-columns: 1fr 2fr; grid-template-rows: auto; }
+        .grid-item { padding: 10px; }
         @media (min-width: 600px) {
             body { background: lightgreen; }
             .container { width: 600px; }
@@ -39,8 +50,24 @@ def main():
     layout_tree.calculate_layout()
 
     # Render the layout
-    renderer = Renderer(layout_tree, base_url)
+    renderer = Renderer(layout_tree)
     renderer.render()  # Render in the terminal
+
+    # Handle navigation and form submission
+    while True:
+        user_input = input("Enter 'link <url>' to navigate or 'submit <form_data>' to submit a form: ")
+        if user_input.startswith("link "):
+            url = user_input.split(" ", 1)[1]
+            html_content = handle_navigation(url)
+            html_parser = HTMLParser(html_content)
+            dom_tree = html_parser.parse()
+            layout_tree = DOMToLayout(dom_tree, styles, media_queries, viewport_width).build_layout_tree()
+            layout_tree.calculate_layout()
+            renderer = Renderer(layout_tree)
+            renderer.render()
+        elif user_input.startswith("submit "):
+            form_data = user_input.split(" ", 1)[1]
+            handle_form_submission(form_data)
 
 if __name__ == "__main__":
     main()

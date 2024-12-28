@@ -46,6 +46,7 @@ class DOMToLayout:
         # Apply media queries
         for media_query, media_styles in self.media_queries.items():
             if self.evaluate_media_query(media_query):
+                print(f"Applying media query: {media_query}")
                 for selector, properties in media_styles.items():
                     if selector == tag or selector in classes or selector == f"#{node_id}":
                         styles.update(properties)

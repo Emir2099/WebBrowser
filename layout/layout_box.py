@@ -53,5 +53,70 @@ class LayoutBox:
             self.top = self.margin["top"]
 
         # Calculate layout for children
+        if self.display == "flex":
+            self.calculate_flex_layout()
+        elif self.display == "grid":
+            self.calculate_grid_layout()
+        else:
+            for child in self.children:
+                child.calculate_layout()
+
+    def calculate_flex_layout(self):
+        # Implement basic flexbox layout calculation
+        flex_direction = self.styles.get("flex-direction", "row")
+        justify_content = self.styles.get("justify-content", "flex-start")
+        align_items = self.styles.get("align-items", "stretch")
+        flex_wrap = self.styles.get("flex-wrap", "nowrap")
+
+        # Calculate positions of children based on flex properties
+        # This is a simplified example, you can expand it to handle all flex properties
+        main_axis_size = self.width if flex_direction == "row" else self.height
+        cross_axis_size = self.height if flex_direction == "row" else self.width
+
+        main_axis_pos = 0
         for child in self.children:
-            child.calculate_layout()
+            child_width = int(child.styles.get("width", "0").replace("px", ""))
+            child_height = int(child.styles.get("height", "0").replace("px", ""))
+            if flex_direction == "row":
+                child.left = main_axis_pos
+                child.top = 0
+                main_axis_pos += child_width
+            else:
+                child.left = 0
+                child.top = main_axis_pos
+                main_axis_pos += child_height
+
+    def calculate_grid_layout(self):
+        # Implement basic grid layout calculation
+        grid_template_columns = self.styles.get("grid-template-columns", "").split()
+        grid_template_rows = self.styles.get("grid-template-rows", "").split()
+
+        # Handle fractional units (fr)
+        column_widths = self.calculate_fractional_units(grid_template_columns, self.width)
+        row_heights = self.calculate_fractional_units(grid_template_rows, self.height)
+
+        # Calculate positions of children based on grid properties
+        for child in self.children:
+            grid_column = int(child.styles.get("grid-column", "1")) - 1
+            grid_row = int(child.styles.get("grid-row", "1")) - 1
+            child.left = sum(column_widths[:grid_column])
+            child.top = sum(row_heights[:grid_row])
+            child.width = column_widths[grid_column]
+            child.height = row_heights[grid_row]
+
+    def calculate_fractional_units(self, template, total_size):
+        """Calculate sizes for fractional units (fr) in grid layout."""
+        sizes = []
+        total_fr = sum([float(size.replace("fr", "")) for size in template if "fr" in size])
+        remaining_size = total_size - sum([int(size.replace("px", "")) for size in template if "px" in size])
+        for size in template:
+            if "fr" in size:
+                fr = float(size.replace("fr", ""))
+                sizes.append((fr / total_fr) * remaining_size)
+            elif "px" in size:
+                sizes.append(int(size.replace("px", "")))
+            elif size == "auto":
+                sizes.append(remaining_size / len([s for s in template if s == "auto"]))
+            else:
+                sizes.append(0)  # Default to 0 for unsupported units
+        return sizes

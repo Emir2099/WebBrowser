@@ -1,6 +1,6 @@
 import re
 from lxml import html
-
+from bs4 import BeautifulSoup
 class Node:
     def __init__(self, tag, text=None, attributes=None):
         self.tag = tag
@@ -38,6 +38,10 @@ class HTMLParser:
         # Wrap the content in a root node if needed
         root = html.fromstring(html_content)
         return self.build_tree(root)
+    
+        # Parse the HTML content and return a DOM tree
+        soup = BeautifulSoup(self.html_content, 'html.parser')
+        return soup
 
     def remove_comments(self, html_content):
         """Remove HTML comments."""

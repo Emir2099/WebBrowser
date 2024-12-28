@@ -5,10 +5,8 @@ from parser.css_parser import CSSParser
 from layout.dom_to_layout import DOMToLayout
 
 class Renderer:
-    def __init__(self, layout_tree, base_url):
+    def __init__(self, layout_tree):
         self.layout_tree = layout_tree
-        self.base_url = base_url
-        self.form_data = {}
 
     def draw_element(self, box, depth=0):
         """
