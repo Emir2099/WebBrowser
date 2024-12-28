@@ -14,9 +14,12 @@ class Renderer:
         styles = box.node.styles
         color = styles.get("color", "black")
         font_size = styles.get("font-size", "14px")
+        background_color = styles.get("background-color", "transparent")
+        text_decoration = styles.get("text-decoration", "none")
+        font_weight = styles.get("font-weight", "normal")
 
         # Simulating rendering in the terminal
-        print(f"{indent}{content} (Color: {color}, Font-size: {font_size})")
+        print(f"{indent}{content} (Color: {color}, Font-size: {font_size}, Background-color: {background_color}, Text-decoration: {text_decoration}, Font-weight: {font_weight})")
 
         for child in box.children:
             self.draw_element(child, depth + 1)

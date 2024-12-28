@@ -1,7 +1,24 @@
-<html>
-  <body>
-    <p>Hello, World!</p>
-    <!-- This is a comment -->
-    <script>console.log("This won't be rendered")</script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test HTML</title>
+    <style>
+        body { background-color: lightblue; }
+        p { color: green; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <!-- This is a comment and should be removed -->
+    <div style="color: red; font-size: 20px;">
+        This is a div with inline styles.
+        <span style="font-weight: bold;">This is a bold span.</span>
+    </div>
+    <p>This is a paragraph.</p>
+    <a href="https://example.com" style="text-decoration: none;">This is a link</a>
+    <script>
+        console.log("This script should be removed.");
+    </script>
+</body>
 </html>
