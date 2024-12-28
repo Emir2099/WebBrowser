@@ -1,9 +1,12 @@
 from layout.layout_box import LayoutBox
+import re
 
 class DOMToLayout:
-    def __init__(self, dom_tree, styles):
+    def __init__(self, dom_tree, styles, media_queries, viewport_width):
         self.dom_tree = dom_tree
         self.styles = styles
+        self.media_queries = media_queries
+        self.viewport_width = viewport_width
 
     def apply_styles(self, node, parent_styles=None):
         """
@@ -22,7 +25,7 @@ class DOMToLayout:
         node.styles.update(inline_styles)
 
     def get_styles_for_node(self, node):
-        """Get styles for a node considering specificity (tag, class, id)."""
+        """Get styles for a node considering specificity (tag, class, id) and media queries."""
         styles = {}
         tag = node.tag
         classes = node.attributes.get("class", "").split()
@@ -40,7 +43,22 @@ class DOMToLayout:
             if selector == f"#{node_id}":
                 styles.update(properties)
 
+        # Apply media queries
+        for media_query, media_styles in self.media_queries.items():
+            if self.evaluate_media_query(media_query):
+                for selector, properties in media_styles.items():
+                    if selector == tag or selector in classes or selector == f"#{node_id}":
+                        styles.update(properties)
+
         return styles
+
+    def evaluate_media_query(self, media_query):
+        """Evaluate if a media query applies based on the viewport width."""
+        match = re.search(r"min-width:\s*(\d+)px", media_query)
+        if match:
+            min_width = int(match.group(1))
+            return self.viewport_width >= min_width
+        return False
 
     def parse_inline_styles(self, style_string):
         """Parse inline styles from a string into a dictionary."""

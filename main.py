@@ -7,7 +7,7 @@ import os
 
 def main():
     # Fetch HTML content
-    url = "http://127.0.0.1:5500/resources/example.html"  # Replace with any URL or file path
+    url = "http://127.0.0.1:5500/resources/example.html"  # Replace with any URL or file pathu
     html_content = fetch_content(url)
 
     # Parse HTML and CSS
@@ -24,12 +24,17 @@ def main():
         p { color: green; font-size: 14px; }
         .float-left { float: left; width: 100px; height: 50px; background-color: lightgrey; }
         .float-right { float: right; width: 100px; height: 50px; background-color: lightcoral; }
+        @media (min-width: 600px) {
+            body { background: lightgreen; }
+            .container { width: 600px; }
+        }
     """  # Temporary inline CSS for testing
     css_parser = CSSParser()
-    styles = css_parser.parse(css_content)
+    styles, media_queries = css_parser.parse(css_content)
 
     # Convert DOM to layout
-    layout_tree = DOMToLayout(dom_tree, styles).build_layout_tree()
+    viewport_width = 800  # Example viewport width
+    layout_tree = DOMToLayout(dom_tree, styles, media_queries, viewport_width).build_layout_tree()
     layout_tree.calculate_layout()
 
     # Render the layout
