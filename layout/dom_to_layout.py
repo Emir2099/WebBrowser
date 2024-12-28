@@ -2,11 +2,12 @@ from layout.layout_box import LayoutBox
 import re
 
 class DOMToLayout:
-    def __init__(self, dom_tree, styles, media_queries, viewport_width):
+    def __init__(self, dom_tree, styles, media_queries, viewport_width, event_handlers):
         self.dom_tree = dom_tree
         self.styles = styles
         self.media_queries = media_queries
         self.viewport_width = viewport_width
+        self.event_handlers = event_handlers
 
     def apply_styles(self, node, parent_styles=None):
         """
@@ -78,7 +79,7 @@ class DOMToLayout:
         def process_node(node, parent_styles=None):
             # Apply styles to each node in the DOM
             self.apply_styles(node, parent_styles)
-            layout_box = LayoutBox(node, node.styles)
+            layout_box = LayoutBox(node, node.styles, self.event_handlers)
             
             # Recursively process child nodes (if any)
             for child in node.children:

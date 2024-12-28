@@ -3,62 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test HTML</title>
+    <title>JavaScript Interactivity Test</title>
     <style>
         body { background-color: lightblue; width: 1000px; height: 800px; }
-        .container { width: 500px; height: 300px; padding: 20px; border: 10px solid black; margin: 30px; position: relative; display: flex; flex-direction: row; justify-content: space-between; align-items: center; }
-        .absolute-box { width: 200px; height: 100px; background-color: yellow; position: absolute; left: 50px; top: 50px; }
-        .relative-box { width: 150px; height: 75px; background-color: green; position: relative; left: 20px; top: 20px; }
-        .fixed-box { width: 100px; height: 50px; background-color: pink; position: fixed; left: 10px; top: 10px; }
-        .sticky-box { width: 120px; height: 60px; background-color: orange; position: sticky; top: 0; }
-        p { color: green; font-size: 14px; }
-        .float-left { float: left; width: 100px; height: 50px; background-color: lightgrey; }
-        .float-right { float: right; width: 100px; height: 50px; background-color: lightcoral; }
-        .flex-container { display: flex; flex-direction: row; justify-content: space-between; align-items: center; }
-        .flex-item { flex: 1; padding: 10px; }
-        .grid-container { display: grid; grid-template-columns: 1fr 2fr; grid-template-rows: auto; }
-        .grid-item { padding: 10px; }
-        @media (min-width: 600px) {
-            body { background: lightgreen; }
-            .container { width: 600px; }
+        .animated-box { width: 100px; height: 100px; background-color: red; position: absolute; animation: move-right 2s; }
+        @keyframes move-right {
+            from { left: 0px; }
+            to { left: 100px; }
         }
     </style>
 </head>
 <body>
-    <div class="container" style="color: red; font-size: 20px;">
-        This is a div with inline styles and box model properties.
-        <div class="absolute-box">This is an absolute positioned box.</div>
-        <div class="relative-box">This is a relative positioned box.</div>
-        <div class="fixed-box">This is a fixed positioned box.</div>
-        <div class="sticky-box">This is a sticky positioned box.</div>
-        <span style="font-weight: bold;">This is a bold span.</span>
-    </div>
-    <p>This is a paragraph.</p>
-    <div class="float-left">Float left</div>
-    <div class="float-right">Float right</div>
-    <div class="flex-container">
-        <div class="flex-item" style="background-color: lightblue;">Flex Item 1</div>
-        <div class="flex-item" style="background-color: lightgreen;">Flex Item 2</div>
-        <div class="flex-item" style="background-color: lightcoral;">Flex Item 3</div>
-    </div>
-    <div class="grid-container">
-        <div class="grid-item" style="background-color: lightblue;">Grid Item 1</div>
-        <div class="grid-item" style="background-color: lightgreen;">Grid Item 2</div>
-        <div class="grid-item" style="background-color: lightcoral;">Grid Item 3</div>
-    </div>
-    <a href="https://example.com" style="text-decoration: none;">This is a link</a>
-    <form action="/submit" method="post">
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <textarea name="comments" placeholder="Comments"></textarea>
-        <select name="options">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-        </select>
+    <button id="btn1" onclick="handleButtonClick()">Click Me</button>
+    <form action="/submit" method="POST">
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
         <button type="submit">Submit</button>
     </form>
-    <script>
-        console.log("This script should be removed.");
-    </script>
+    <div class="animated-box"></div>
 </body>
 </html>
