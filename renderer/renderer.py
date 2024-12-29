@@ -44,10 +44,24 @@ class Renderer:
             self.draw_element(child, depth + 1)
 
     def render(self):
-        print("Rendering Layout Tree:")
-        self.draw_element(self.layout_tree)
-        print("Rendering Complete.")
-
+        rendered_content = []
+        for box in self.layout_tree.children:
+            rendered_content.append(self.render_box(box))
+        return rendered_content
+        # print("Rendering Layout Tree:")
+        # self.draw_element(self.layout_tree)
+        # print("Rendering Complete.")
+    def render_box(self, box):
+        content = {
+            'left': box.left,
+            'top': box.top,
+            'width': box.width,
+            'height': box.height,
+            'background_color': box.background_color,
+            'text': box.text,
+            'children': [self.render_box(child) for child in box.children]
+        }
+        return content
     def handle_link(self, href):
         if not href.startswith('http'):
             href = os.path.join(self.base_url, href)
