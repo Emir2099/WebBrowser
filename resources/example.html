@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Interactivity Test</title>
+    <title>Python Scripting Test</title>
     <style>
         body { background-color: lightblue; width: 1000px; height: 800px; }
         .animated-box { width: 100px; height: 100px; background-color: red; position: absolute; animation: move-right 2s; }
@@ -12,9 +12,17 @@
             to { left: 100px; }
         }
     </style>
+    <script type="text/python">
+python_scripting.console_log("Python script executed!")
+        
+def timeout_callback():
+    python_scripting.console_log('Timeout executed!')
+        
+python_scripting.set_timeout(timeout_callback, 2000)
+    </script>
 </head>
 <body>
-    <button id="btn1" onclick="handleButtonClick()">Click Me</button>
+    <button id="btn1" onclick="python_scripting.console_log('Button clicked!')">Click Me</button>
     <form action="/submit" method="POST">
         <input type="text" id="username" name="username" placeholder="Username">
         <input type="password" id="password" name="password" placeholder="Password">

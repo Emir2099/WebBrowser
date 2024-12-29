@@ -1,6 +1,7 @@
 import re
 from lxml import html
 from bs4 import BeautifulSoup
+
 class Node:
     def __init__(self, tag, text=None, attributes=None):
         self.tag = tag
@@ -62,3 +63,17 @@ class HTMLParser:
             if child_node:
                 node.add_child(child_node)
         return node
+
+    def extract_python_scripts(self):
+        """Extract <script type="text/python"> tags and their contents."""
+        scripts = []
+        soup = BeautifulSoup(self.html_content, 'html.parser')
+        for script in soup.find_all('script', {'type': 'text/python'}):
+            if script.string:
+                # Remove leading and trailing whitespace and ensure consistent indentation
+                script_content = script.string.strip()
+                lines = script_content.split('\n')
+                min_indent = min(len(line) - len(line.lstrip()) for line in lines if line.strip())
+                formatted_script = '\n'.join(line[min_indent:] for line in lines)
+                scripts.append(formatted_script)
+        return scripts
