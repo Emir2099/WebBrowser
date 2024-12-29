@@ -19,6 +19,8 @@ class LayoutBox:
         self.animation = styles.get("animation", "")
         self.transition = styles.get("transition", "")
         self.event_id = None
+        self.background_color = styles.get("background-color", "transparent")  # Set background color
+        self.text = node.text if node.text else ""  # Set text
 
         # Handle onclick event
         if "onclick" in node.attributes:
